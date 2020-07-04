@@ -32,9 +32,10 @@ class _$ValueFailureTearOff {
     );
   }
 
-  ListTooLong<T> listTooLong<T>({@required String failedValue}) {
+  ListTooLong<T> listTooLong<T>({@required T failedValue, @required int max}) {
     return ListTooLong<T>(
       failedValue: failedValue,
+      max: max,
     );
   }
 
@@ -55,14 +56,12 @@ class _$ValueFailureTearOff {
 const $ValueFailure = _$ValueFailureTearOff();
 
 mixin _$ValueFailure<T> {
-  String get failedValue;
-
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result exceedingLength(String failedValue, int max),
     @required Result empty(String failedValue),
     @required Result multiline(String failedValue),
-    @required Result listTooLong(String failedValue),
+    @required Result listTooLong(T failedValue, int max),
     @required Result invalidEmail(String failedValue),
     @required Result shortPassword(String failedValue),
   });
@@ -71,7 +70,7 @@ mixin _$ValueFailure<T> {
     Result exceedingLength(String failedValue, int max),
     Result empty(String failedValue),
     Result multiline(String failedValue),
-    Result listTooLong(String failedValue),
+    Result listTooLong(T failedValue, int max),
     Result invalidEmail(String failedValue),
     Result shortPassword(String failedValue),
     @required Result orElse(),
@@ -95,15 +94,12 @@ mixin _$ValueFailure<T> {
     Result shortPassword(ShortPassword<T> value),
     @required Result orElse(),
   });
-
-  $ValueFailureCopyWith<T, ValueFailure<T>> get copyWith;
 }
 
 abstract class $ValueFailureCopyWith<T, $Res> {
   factory $ValueFailureCopyWith(
           ValueFailure<T> value, $Res Function(ValueFailure<T>) then) =
       _$ValueFailureCopyWithImpl<T, $Res>;
-  $Res call({String failedValue});
 }
 
 class _$ValueFailureCopyWithImpl<T, $Res>
@@ -113,24 +109,12 @@ class _$ValueFailureCopyWithImpl<T, $Res>
   final ValueFailure<T> _value;
   // ignore: unused_field
   final $Res Function(ValueFailure<T>) _then;
-
-  @override
-  $Res call({
-    Object failedValue = freezed,
-  }) {
-    return _then(_value.copyWith(
-      failedValue:
-          failedValue == freezed ? _value.failedValue : failedValue as String,
-    ));
-  }
 }
 
-abstract class $ExceedingLengthCopyWith<T, $Res>
-    implements $ValueFailureCopyWith<T, $Res> {
+abstract class $ExceedingLengthCopyWith<T, $Res> {
   factory $ExceedingLengthCopyWith(
           ExceedingLength<T> value, $Res Function(ExceedingLength<T>) then) =
       _$ExceedingLengthCopyWithImpl<T, $Res>;
-  @override
   $Res call({String failedValue, int max});
 }
 
@@ -199,7 +183,7 @@ class _$ExceedingLength<T> implements ExceedingLength<T> {
     @required Result exceedingLength(String failedValue, int max),
     @required Result empty(String failedValue),
     @required Result multiline(String failedValue),
-    @required Result listTooLong(String failedValue),
+    @required Result listTooLong(T failedValue, int max),
     @required Result invalidEmail(String failedValue),
     @required Result shortPassword(String failedValue),
   }) {
@@ -218,7 +202,7 @@ class _$ExceedingLength<T> implements ExceedingLength<T> {
     Result exceedingLength(String failedValue, int max),
     Result empty(String failedValue),
     Result multiline(String failedValue),
-    Result listTooLong(String failedValue),
+    Result listTooLong(T failedValue, int max),
     Result invalidEmail(String failedValue),
     Result shortPassword(String failedValue),
     @required Result orElse(),
@@ -272,18 +256,14 @@ abstract class ExceedingLength<T> implements ValueFailure<T> {
   const factory ExceedingLength(
       {@required String failedValue, @required int max}) = _$ExceedingLength<T>;
 
-  @override
   String get failedValue;
   int get max;
-  @override
   $ExceedingLengthCopyWith<T, ExceedingLength<T>> get copyWith;
 }
 
-abstract class $EmptyCopyWith<T, $Res>
-    implements $ValueFailureCopyWith<T, $Res> {
+abstract class $EmptyCopyWith<T, $Res> {
   factory $EmptyCopyWith(Empty<T> value, $Res Function(Empty<T>) then) =
       _$EmptyCopyWithImpl<T, $Res>;
-  @override
   $Res call({String failedValue});
 }
 
@@ -340,7 +320,7 @@ class _$Empty<T> implements Empty<T> {
     @required Result exceedingLength(String failedValue, int max),
     @required Result empty(String failedValue),
     @required Result multiline(String failedValue),
-    @required Result listTooLong(String failedValue),
+    @required Result listTooLong(T failedValue, int max),
     @required Result invalidEmail(String failedValue),
     @required Result shortPassword(String failedValue),
   }) {
@@ -359,7 +339,7 @@ class _$Empty<T> implements Empty<T> {
     Result exceedingLength(String failedValue, int max),
     Result empty(String failedValue),
     Result multiline(String failedValue),
-    Result listTooLong(String failedValue),
+    Result listTooLong(T failedValue, int max),
     Result invalidEmail(String failedValue),
     Result shortPassword(String failedValue),
     @required Result orElse(),
@@ -412,18 +392,14 @@ class _$Empty<T> implements Empty<T> {
 abstract class Empty<T> implements ValueFailure<T> {
   const factory Empty({@required String failedValue}) = _$Empty<T>;
 
-  @override
   String get failedValue;
-  @override
   $EmptyCopyWith<T, Empty<T>> get copyWith;
 }
 
-abstract class $MultilineCopyWith<T, $Res>
-    implements $ValueFailureCopyWith<T, $Res> {
+abstract class $MultilineCopyWith<T, $Res> {
   factory $MultilineCopyWith(
           Multiline<T> value, $Res Function(Multiline<T>) then) =
       _$MultilineCopyWithImpl<T, $Res>;
-  @override
   $Res call({String failedValue});
 }
 
@@ -482,7 +458,7 @@ class _$Multiline<T> implements Multiline<T> {
     @required Result exceedingLength(String failedValue, int max),
     @required Result empty(String failedValue),
     @required Result multiline(String failedValue),
-    @required Result listTooLong(String failedValue),
+    @required Result listTooLong(T failedValue, int max),
     @required Result invalidEmail(String failedValue),
     @required Result shortPassword(String failedValue),
   }) {
@@ -501,7 +477,7 @@ class _$Multiline<T> implements Multiline<T> {
     Result exceedingLength(String failedValue, int max),
     Result empty(String failedValue),
     Result multiline(String failedValue),
-    Result listTooLong(String failedValue),
+    Result listTooLong(T failedValue, int max),
     Result invalidEmail(String failedValue),
     Result shortPassword(String failedValue),
     @required Result orElse(),
@@ -554,19 +530,15 @@ class _$Multiline<T> implements Multiline<T> {
 abstract class Multiline<T> implements ValueFailure<T> {
   const factory Multiline({@required String failedValue}) = _$Multiline<T>;
 
-  @override
   String get failedValue;
-  @override
   $MultilineCopyWith<T, Multiline<T>> get copyWith;
 }
 
-abstract class $ListTooLongCopyWith<T, $Res>
-    implements $ValueFailureCopyWith<T, $Res> {
+abstract class $ListTooLongCopyWith<T, $Res> {
   factory $ListTooLongCopyWith(
           ListTooLong<T> value, $Res Function(ListTooLong<T>) then) =
       _$ListTooLongCopyWithImpl<T, $Res>;
-  @override
-  $Res call({String failedValue});
+  $Res call({T failedValue, int max});
 }
 
 class _$ListTooLongCopyWithImpl<T, $Res>
@@ -582,24 +554,29 @@ class _$ListTooLongCopyWithImpl<T, $Res>
   @override
   $Res call({
     Object failedValue = freezed,
+    Object max = freezed,
   }) {
     return _then(ListTooLong<T>(
       failedValue:
-          failedValue == freezed ? _value.failedValue : failedValue as String,
+          failedValue == freezed ? _value.failedValue : failedValue as T,
+      max: max == freezed ? _value.max : max as int,
     ));
   }
 }
 
 class _$ListTooLong<T> implements ListTooLong<T> {
-  const _$ListTooLong({@required this.failedValue})
-      : assert(failedValue != null);
+  const _$ListTooLong({@required this.failedValue, @required this.max})
+      : assert(failedValue != null),
+        assert(max != null);
 
   @override
-  final String failedValue;
+  final T failedValue;
+  @override
+  final int max;
 
   @override
   String toString() {
-    return 'ValueFailure<$T>.listTooLong(failedValue: $failedValue)';
+    return 'ValueFailure<$T>.listTooLong(failedValue: $failedValue, max: $max)';
   }
 
   @override
@@ -608,12 +585,16 @@ class _$ListTooLong<T> implements ListTooLong<T> {
         (other is ListTooLong<T> &&
             (identical(other.failedValue, failedValue) ||
                 const DeepCollectionEquality()
-                    .equals(other.failedValue, failedValue)));
+                    .equals(other.failedValue, failedValue)) &&
+            (identical(other.max, max) ||
+                const DeepCollectionEquality().equals(other.max, max)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(failedValue) ^
+      const DeepCollectionEquality().hash(max);
 
   @override
   $ListTooLongCopyWith<T, ListTooLong<T>> get copyWith =>
@@ -625,7 +606,7 @@ class _$ListTooLong<T> implements ListTooLong<T> {
     @required Result exceedingLength(String failedValue, int max),
     @required Result empty(String failedValue),
     @required Result multiline(String failedValue),
-    @required Result listTooLong(String failedValue),
+    @required Result listTooLong(T failedValue, int max),
     @required Result invalidEmail(String failedValue),
     @required Result shortPassword(String failedValue),
   }) {
@@ -635,7 +616,7 @@ class _$ListTooLong<T> implements ListTooLong<T> {
     assert(listTooLong != null);
     assert(invalidEmail != null);
     assert(shortPassword != null);
-    return listTooLong(failedValue);
+    return listTooLong(failedValue, max);
   }
 
   @override
@@ -644,14 +625,14 @@ class _$ListTooLong<T> implements ListTooLong<T> {
     Result exceedingLength(String failedValue, int max),
     Result empty(String failedValue),
     Result multiline(String failedValue),
-    Result listTooLong(String failedValue),
+    Result listTooLong(T failedValue, int max),
     Result invalidEmail(String failedValue),
     Result shortPassword(String failedValue),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (listTooLong != null) {
-      return listTooLong(failedValue);
+      return listTooLong(failedValue, max);
     }
     return orElse();
   }
@@ -695,20 +676,18 @@ class _$ListTooLong<T> implements ListTooLong<T> {
 }
 
 abstract class ListTooLong<T> implements ValueFailure<T> {
-  const factory ListTooLong({@required String failedValue}) = _$ListTooLong<T>;
+  const factory ListTooLong({@required T failedValue, @required int max}) =
+      _$ListTooLong<T>;
 
-  @override
-  String get failedValue;
-  @override
+  T get failedValue;
+  int get max;
   $ListTooLongCopyWith<T, ListTooLong<T>> get copyWith;
 }
 
-abstract class $InvalidEmailCopyWith<T, $Res>
-    implements $ValueFailureCopyWith<T, $Res> {
+abstract class $InvalidEmailCopyWith<T, $Res> {
   factory $InvalidEmailCopyWith(
           InvalidEmail<T> value, $Res Function(InvalidEmail<T>) then) =
       _$InvalidEmailCopyWithImpl<T, $Res>;
-  @override
   $Res call({String failedValue});
 }
 
@@ -768,7 +747,7 @@ class _$InvalidEmail<T> implements InvalidEmail<T> {
     @required Result exceedingLength(String failedValue, int max),
     @required Result empty(String failedValue),
     @required Result multiline(String failedValue),
-    @required Result listTooLong(String failedValue),
+    @required Result listTooLong(T failedValue, int max),
     @required Result invalidEmail(String failedValue),
     @required Result shortPassword(String failedValue),
   }) {
@@ -787,7 +766,7 @@ class _$InvalidEmail<T> implements InvalidEmail<T> {
     Result exceedingLength(String failedValue, int max),
     Result empty(String failedValue),
     Result multiline(String failedValue),
-    Result listTooLong(String failedValue),
+    Result listTooLong(T failedValue, int max),
     Result invalidEmail(String failedValue),
     Result shortPassword(String failedValue),
     @required Result orElse(),
@@ -841,18 +820,14 @@ abstract class InvalidEmail<T> implements ValueFailure<T> {
   const factory InvalidEmail({@required String failedValue}) =
       _$InvalidEmail<T>;
 
-  @override
   String get failedValue;
-  @override
   $InvalidEmailCopyWith<T, InvalidEmail<T>> get copyWith;
 }
 
-abstract class $ShortPasswordCopyWith<T, $Res>
-    implements $ValueFailureCopyWith<T, $Res> {
+abstract class $ShortPasswordCopyWith<T, $Res> {
   factory $ShortPasswordCopyWith(
           ShortPassword<T> value, $Res Function(ShortPassword<T>) then) =
       _$ShortPasswordCopyWithImpl<T, $Res>;
-  @override
   $Res call({String failedValue});
 }
 
@@ -912,7 +887,7 @@ class _$ShortPassword<T> implements ShortPassword<T> {
     @required Result exceedingLength(String failedValue, int max),
     @required Result empty(String failedValue),
     @required Result multiline(String failedValue),
-    @required Result listTooLong(String failedValue),
+    @required Result listTooLong(T failedValue, int max),
     @required Result invalidEmail(String failedValue),
     @required Result shortPassword(String failedValue),
   }) {
@@ -931,7 +906,7 @@ class _$ShortPassword<T> implements ShortPassword<T> {
     Result exceedingLength(String failedValue, int max),
     Result empty(String failedValue),
     Result multiline(String failedValue),
-    Result listTooLong(String failedValue),
+    Result listTooLong(T failedValue, int max),
     Result invalidEmail(String failedValue),
     Result shortPassword(String failedValue),
     @required Result orElse(),
@@ -985,8 +960,6 @@ abstract class ShortPassword<T> implements ValueFailure<T> {
   const factory ShortPassword({@required String failedValue}) =
       _$ShortPassword<T>;
 
-  @override
   String get failedValue;
-  @override
   $ShortPasswordCopyWith<T, ShortPassword<T>> get copyWith;
 }
