@@ -88,7 +88,6 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
         password: state.password,
       );
     }
-
     yield state.copyWith(
       isSubmitting: false,
       showErrorMessages: true,

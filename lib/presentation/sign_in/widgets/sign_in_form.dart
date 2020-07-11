@@ -1,7 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:noteapp/application/auth/auth_bloc.dart';
 import 'package:noteapp/application/auth/sign_in_form/sign_in_form_bloc.dart';
+import 'package:noteapp/presentation/routes/router.gr.dart';
 
 class SignInForm extends StatelessWidget {
   @override
@@ -23,7 +26,11 @@ class SignInForm extends StatelessWidget {
               ).show(context);
             },
             (_) {
-              // TODO: Navigate
+              ExtendedNavigator.of(context)
+                  .pushReplacementNamed(Routes.notesOverviewPage);
+              context
+                  .bloc<AuthBloc>()
+                  .add(const AuthEvent.authCheckRequested());
             },
           ),
         );
